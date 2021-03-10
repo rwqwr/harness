@@ -1,4 +1,6 @@
-
+include(":core")
+include(":mylibrary2")
+include(":mylibrary1")
 dependencyResolutionManagement {
     repositories {
         google()

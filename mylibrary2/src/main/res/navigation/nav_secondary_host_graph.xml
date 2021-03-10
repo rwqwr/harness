@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_secondary_host_graph"
+    app:startDestination="@id/secondaryHost">
+
+    <fragment android:id="@+id/secondaryHost"
+        android:name="com.example.mylibrary2.host.SecondaryHostFragment"
+        tools:layout="@layout/fragment_nav_host_secondary"
+        >
+        <argument android:name="arg"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
+</navigation>

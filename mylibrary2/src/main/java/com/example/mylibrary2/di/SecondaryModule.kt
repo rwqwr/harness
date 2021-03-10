@@ -1,11 +1,11 @@
-package com.example.fragmentfactory.di
+package com.example.mylibrary2.di
 
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
 
-@Module
-object Module {
+@Module(includes = [FragmentsModule::class])
+internal object SecondaryModule {
 
     @Provides
     @JvmStatic

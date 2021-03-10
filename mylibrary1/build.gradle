@@ -1,9 +1,8 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'redmadrobot.navigation-core'
 }
 
 android {
@@ -11,13 +10,13 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.fragmentfactory"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -39,15 +38,10 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
 
 dependencies {
 
-    implementation project(":mylibrary1")
-    implementation project(":mylibrary2")
-
+    implementation project(":core")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -58,6 +52,9 @@ dependencies {
 
     implementation project(":fragment_processor_api")
     kapt project(":fragment_processor")
+
+    compileOnly 'com.squareup.inject:assisted-inject-annotations-dagger2:0.6.0'
+    kapt 'com.squareup.inject:assisted-inject-processor-dagger2:0.6.0'
 
     implementation "com.google.dagger:dagger:2.32"
     kapt "com.google.dagger:dagger-compiler:2.32"
