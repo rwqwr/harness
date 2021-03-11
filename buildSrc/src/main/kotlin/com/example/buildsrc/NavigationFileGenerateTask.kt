@@ -1,24 +1,22 @@
 package com.example.buildsrc
 
-import groovy.util.IndentPrinter
 import groovy.util.XmlParser
-import groovy.util.XmlSlurper
-import groovy.xml.MarkupBuilder
+import groovy.util.Node
 import groovy.xml.QName
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.DirectoryProperty
-import org.gradle.api.file.RegularFile
 import org.gradle.api.tasks.*
 import java.io.File
 
+@Suppress("UnstableApiUsage")
 open class NavigationFileGenerateTask : DefaultTask() {
 
     @InputFiles
     val navigationFiles: ConfigurableFileCollection? = project.objects.fileCollection()
 
     @OutputDirectories
-    val outputDir: ConfigurableFileCollection? = project.objects.fileCollection()
+    val outputDir: DirectoryProperty? = project.objects.directoryProperty()
 
     @TaskAction
     fun generate() {
@@ -27,31 +25,28 @@ open class NavigationFileGenerateTask : DefaultTask() {
         }
 
         navigationFiles?.forEach { file: File ->
-            val outputDirFiles: Set<File> = outputDir.files
+            val outputDirFile: File = outputDir.asFile.get()
+            outputDirFile.mkdirs()
 
+            val id = XmlParser().parse(file).findId()
 
-            val xmlFile = XmlParser().parse(file)
+            val copyFile = File(outputDirFile, file.name)
+            copyFile.writeText(generateXmlText(id.orEmpty()))
+        }
+    }
 
-            val id = xmlFile.attributes().toList()
-                .filterIsInstance<Pair<QName, String>>()
-                .find { it.first.localPart == "id" }
+    private fun Node.findId(): String? {
+        return attributes().toList()
+            .filterIsInstance<Pair<QName, String>>()
+            .find { it.first.localPart == "id" }
+            ?.second
+    }
 
-            val navigationText = """
+    private fun generateXmlText(id: String): String {
+        return """
                 <?xml version="1.0" encoding="utf-8"?>
                 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="${id?.second}"/>
+                    android:id="$id"/>
             """.trimIndent()
-
-            outputDirFiles.forEach { outputDirFile ->
-                outputDirFile.mkdirs()
-
-                val copyFile = File(outputDirFile, file.name)
-
-                if (!copyFile.exists()) {
-                    copyFile.createNewFile()
-                }
-                copyFile.writeText(navigationText)
-            }
-        }
     }
 }

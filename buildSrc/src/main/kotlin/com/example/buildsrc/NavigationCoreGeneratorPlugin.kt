@@ -1,84 +1,72 @@
 package com.example.buildsrc
 
-import com.android.build.gradle.AppExtension
 import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.LibraryExtension
-import com.android.build.gradle.api.BaseVariant
-import org.gradle.api.DomainObjectSet
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.kotlin.dsl.*
 import java.io.File
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
+@ExperimentalContracts
 open class NavigationCoreGeneratorPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         val parent = target.rootProject
+        val generatedDir = target.layout.buildDirectory.dir(GENERATED_PATH)
 
-        val extension = target.extensions.create<NavigationFileGeneratorExtension>("navigation")
+        parent.allprojects.forEach { child ->
+            child.afterEvaluate {
+                val androidExtension = android()
+                if (this == target || androidExtension == null) {
+                    return@afterEvaluate
+                }
 
-        val taskName = "generateNavigationFiles"
-        val task = with(target) {
-            tasks.register<NavigationFileGenerateTask>(taskName) {
-                val generatedDir = target.layout
-                    .buildDirectory
-                    .dir("generated/res/resValues")
+                androidExtension.buildTypes.forEach { buildType ->
+                    val navigationFolderFiles = androidExtension.findNavigationFolder()
+                        ?.listFiles()
+                        .orEmpty()
 
-                navigationFiles?.setFrom(extension.navigationFiles)
+                    tasks.register<NavigationFileGenerateTask>(generateName(buildType.name)) {
+                        navigationFiles?.setFrom(navigationFolderFiles)
+                        outputDir?.set(
+                            generatedDir
+                                .get()
+                                .dir("${buildType.name}/$NAVIGATION_FOLDER_NAME")
+                        )
+                    }
 
-                val outputs = extension.buildTypes
-                    .map { buildType -> generatedDir.get().dir("${buildType}/navigation") }
-
-                outputDir?.setFrom(outputs)
+                    target.findGenerateResValuesTask(buildType.name)
+                        ?.finalizedBy("${path}:${generateName(buildType.name)}")
+                }
             }
         }
 
-        parent.allprojects
-            .forEachIndexed { index, child ->
-                child.afterEvaluate {
-                    if (this == target) {
-                        return@afterEvaluate
-                    }
+    }
 
-                    val androidProject = android() ?: return@afterEvaluate
-                    androidProject.buildTypes.forEach { buildType ->
-                        with(extension) {
-                            val navigationFolderFiles = androidProject.sourceSets
-                                .getByName("main").res.srcDirs
-                                .first()
-                                .listFiles { _, name -> name == "navigation" }.orEmpty()
-                                .first()
-                                .listFiles().orEmpty()
+    private fun generateName(buildType: String): String {
+        return "generate${buildType.capitalize()}NavigationFiles"
+    }
 
-                            navigationFiles.addAll(navigationFolderFiles)
+    private fun Project.findGenerateResValuesTask(buildTypeName: String): Task? {
+        return tasks.findByPath("${path}:generate${buildTypeName.capitalize()}ResValues")
+    }
 
-                            buildTypes.add(buildType.name)
-                        }
-                    }
+    private fun BaseExtension.findNavigationFolder(): File? {
+        return sourceSets
+            .getByName("main").res.srcDirs
+            .first()
+            .listFiles { _, name -> name == NAVIGATION_FOLDER_NAME }.orEmpty()
+            .firstOrNull()
+    }
 
-                    if (index == parent.allprojects.size - 1) {
-                        extension.buildTypes.forEach { buildType ->
-                            tasks.findByPath("${target.path}:generate${buildType.capitalize()}ResValues")?.let { parentTask ->
-                                parentTask.finalizedBy(":core:generateNavigationFiles")
-                            }
-                        }
-
-                    }
-                }
-            }
-
+    companion object {
+        private const val GENERATED_PATH = "generated/res/resValues"
+        private const val NAVIGATION_FOLDER_NAME = "navigation"
     }
 }
 
-fun Project.isAndroidModule(): Boolean {
-    return extensions.findByName("android") != null
+fun Project.android(): BaseExtension? {
+    return extensions.findByType()
 }
-
-fun Project.android(): BaseExtension? = extensions.findByType()
-
-private val BaseExtension.variants: DomainObjectSet<out BaseVariant>?
-    get() = when (this) {
-        is AppExtension -> applicationVariants
-        is LibraryExtension -> libraryVariants
-        else -> null
-    }
