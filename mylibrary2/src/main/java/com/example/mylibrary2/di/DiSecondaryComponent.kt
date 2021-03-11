@@ -1,6 +1,5 @@
 package com.example.mylibrary2.di
 
-import com.example.mylibrary2.FragmentProviderModule
 import com.example.mylibrary2.host.SecondaryHostFragment
 import dagger.Component
 

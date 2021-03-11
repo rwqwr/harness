@@ -1,14 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    `java-library`
     `kotlin-dsl`
-    id("org.jetbrains.kotlin.jvm") version "1.4.30"
-}
-
-repositories {
-    google()
-    mavenCentral()
-    gradlePluginPortal()
 }
 
 java {
@@ -20,10 +14,15 @@ val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions.useIR = true
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
-dependencies {
+repositories {
+    gradlePluginPortal()
+    google()
+    jcenter()
+    mavenCentral()
+}
 
+dependencies {
     implementation("com.android.tools.build:gradle:4.1.2")
-    implementation(kotlin("gradle-plugin", version = "1.4.30"))
 }
 
 gradlePlugin {
