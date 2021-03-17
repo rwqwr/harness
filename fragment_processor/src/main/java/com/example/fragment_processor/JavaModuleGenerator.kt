@@ -106,7 +106,7 @@ class JavaModuleGenerator(
                     .addCode(
                         """
                             for (Class fragment: fragmentsClasses.keySet()) {
-                                if (fragment.getCanonicalName() == className) {
+                                if (fragment.getCanonicalName().equals(className)) {
                                     return fragmentsClasses.get(fragment).get();
                                 }
                             }
