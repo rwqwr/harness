@@ -6,7 +6,7 @@ import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 import javax.lang.model.element.TypeElement
 
-class KotlinProvideMethodGenerator : MethodGenerator<FunSpec.Builder> {
+internal class KotlinProvideMethodGenerator : MethodGenerator<FunSpec.Builder> {
 
     override fun generate(
         element: TypeElement,

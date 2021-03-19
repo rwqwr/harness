@@ -14,7 +14,7 @@ import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 
-class JavaModuleGenerator(
+internal class JavaModuleGenerator(
     private val className: String = "FragmentProviderModule",
     private val factoryName: String = "FragmentFactory_Impl",
     private val methodGenerator: MethodGenerator<MethodSpec.Builder>,

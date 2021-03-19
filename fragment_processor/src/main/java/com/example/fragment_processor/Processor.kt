@@ -15,7 +15,7 @@ import javax.lang.model.element.TypeElement
 
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 @AutoService(Processor::class)
-class Processor : AbstractProcessor() {
+internal class Processor : AbstractProcessor() {
 
     private val fragmentClassName = ClassName(
         "androidx.fragment.app",

@@ -8,7 +8,7 @@ import dagger.multibindings.IntoMap
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 
-class JavaProvideMethodGenerator : MethodGenerator<MethodSpec.Builder> {
+internal class JavaProvideMethodGenerator : MethodGenerator<MethodSpec.Builder> {
 
     override fun generate(element: TypeElement, block: MethodSpec.Builder.() -> MethodSpec.Builder): MethodSpec.Builder {
         return MethodSpec.methodBuilder("provide${element.simpleName}")

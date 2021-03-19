@@ -13,7 +13,7 @@ import javax.lang.model.element.Element
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 
-class KotlinModuleGenerator(
+internal class KotlinModuleGenerator(
     private val className: String = "FragmentProviderModule",
     private val factoryName: String = "FragmentFactory_Impl",
     private val methodGenerator: MethodGenerator<FunSpec.Builder>,
