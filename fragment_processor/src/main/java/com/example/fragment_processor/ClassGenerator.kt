@@ -1,18 +1,16 @@
 package com.example.fragment_processor
 
-import javax.annotation.processing.Filer
+import com.squareup.javapoet.TypeSpec
 import javax.lang.model.SourceVersion
-import javax.lang.model.element.Element
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 
-internal interface Generator {
+internal interface ClassGenerator {
 
     fun generate(
         packageName: String,
         originatingElement: TypeElement?,
         sourceVersion: SourceVersion,
-        elementsUtils: Elements,
-        filer: Filer
-    )
+        elementsUtils: Elements
+    ): TypeSpec.Builder
 }

@@ -8,9 +8,9 @@ import dagger.multibindings.IntoMap
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 
-internal class JavaProvideMethodGenerator : MethodGenerator<MethodSpec.Builder> {
+internal object JavaProvideFragmentMethodGenerator {
 
-    override fun generate(element: TypeElement, block: MethodSpec.Builder.() -> MethodSpec.Builder): MethodSpec.Builder {
+    fun generate(element: TypeElement): MethodSpec.Builder {
         return MethodSpec.methodBuilder("provide${element.simpleName}")
             .addModifiers(Modifier.ABSTRACT)
             .addAnnotation(Binds::class.java)
@@ -30,6 +30,5 @@ internal class JavaProvideMethodGenerator : MethodGenerator<MethodSpec.Builder> 
                     "Fragment"
                 )
             )
-            .block()
     }
 }
