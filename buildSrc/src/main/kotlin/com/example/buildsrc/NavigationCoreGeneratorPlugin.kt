@@ -50,7 +50,7 @@ open class NavigationCoreGeneratorPlugin : Plugin<Project> {
     }
 
     private fun Project.findGenerateResValuesTask(buildTypeName: String): Task? {
-        return tasks.findByPath("${path}:generate${buildTypeName.capitalize()}ResValues")
+        return tasks.findByPath("${path}:generate${buildTypeName.capitalize()}Assets")
     }
 
     private fun BaseExtension.findNavigationFolder(): File? {

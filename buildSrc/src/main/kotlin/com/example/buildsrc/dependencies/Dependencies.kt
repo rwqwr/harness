@@ -4,6 +4,9 @@ object JetBrains : Dependency by Group("org.jetbrains") {
     object Kotlin : Dependency by Subgroup(JetBrains, "kotlin", "1.4.31") {
         object Std : Dependency by Module(Kotlin, "kotlin-stdlib", { version })
     }
+    object KotlinX : Dependency by Subgroup(JetBrains, "kotlinx") {
+        object Coroutines : Dependency by Module(KotlinX, "kotlinx-coroutines-core", { "1.4.3" })
+    }
 }
 
 object Androidx : Dependency by Group("androidx") {

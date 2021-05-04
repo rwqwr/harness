@@ -18,10 +18,11 @@ android {
 
 dependencies {
 
-    implementation(project(":mylibrary1"))
-    implementation(project(":mylibrary2"))
+    api(project(":mylibrary1"))
+    api(project(":mylibrary2"))
 
     implementation(dependency(JetBrains.Kotlin.Std))
+    implementation(dependency(JetBrains.KotlinX.Coroutines))
     implementation(dependency(Androidx.Core.Ktx))
     implementation(dependency(Androidx.AppCompat))
     implementation(dependency(Google.Material))
