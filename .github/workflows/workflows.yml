@@ -1,6 +1,9 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   check:
@@ -20,3 +23,10 @@ jobs:
         uses: eskatos/gradle-command-action@v1
         with:
           arguments: assembleDebug
+
+  markdown-link-check:
+    name: Markdown link
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
