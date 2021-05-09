@@ -1,5 +1,5 @@
 # Fragment factory
-![build](https://github.com/rwqwr/fragment-factory/actions/workflows/main.yml/badge.svg)
+[![build](https://github.com/rwqwr/fragment-factory/actions/workflows/workflows.yml/badge.svg)](https://github.com/rwqwr/fragment-factory/actions/workflows/workflows.yml)
 
 The repository contains the ability to generate Dagger Fragments module and generate navigation stubs for a multi-module project.
 
