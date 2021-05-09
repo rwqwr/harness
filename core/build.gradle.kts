@@ -3,7 +3,7 @@ import com.example.buildsrc.dependencies.*
 plugins {
     id("redmadrobot.android-library")
     id("androidx.navigation.safeargs.kotlin")
-    id("redmadrobot.navigation-core")
+    id("navigation-core")
 }
 
 android {

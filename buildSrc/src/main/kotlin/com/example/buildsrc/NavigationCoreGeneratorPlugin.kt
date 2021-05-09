@@ -9,7 +9,6 @@ import java.io.File
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
-@ExperimentalContracts
 open class NavigationCoreGeneratorPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
@@ -17,10 +16,10 @@ open class NavigationCoreGeneratorPlugin : Plugin<Project> {
         val generatedDir = target.layout.buildDirectory.dir(GENERATED_PATH)
 
         parent.allprojects.forEach { child ->
-            child.afterEvaluate {
-                val androidExtension = android()
+            child.pluginManager.withPlugin("com.android.library") {
+                val androidExtension = child.android()
                 if (this == target || androidExtension == null) {
-                    return@afterEvaluate
+                    return@withPlugin
                 }
 
                 androidExtension.buildTypes.forEach { buildType ->
@@ -28,7 +27,7 @@ open class NavigationCoreGeneratorPlugin : Plugin<Project> {
                         ?.listFiles()
                         .orEmpty()
 
-                    tasks.register<NavigationFileGenerateTask>(generateName(buildType.name)) {
+                    child.tasks.register<NavigationFileGenerateTask>(generateName(buildType.name)) {
                         navigationFiles?.setFrom(navigationFolderFiles)
                         outputDir?.set(
                             generatedDir
@@ -38,7 +37,7 @@ open class NavigationCoreGeneratorPlugin : Plugin<Project> {
                     }
 
                     target.findGenerateResValuesTask(buildType.name)
-                        ?.finalizedBy("${path}:${generateName(buildType.name)}")
+                        ?.finalizedBy("${child.path}:${generateName(buildType.name)}")
                 }
             }
         }
@@ -50,7 +49,7 @@ open class NavigationCoreGeneratorPlugin : Plugin<Project> {
     }
 
     private fun Project.findGenerateResValuesTask(buildTypeName: String): Task? {
-        return tasks.findByPath("${path}:generate${buildTypeName.capitalize()}Assets")
+        return tasks.findByPath("${path}:generate${buildTypeName.capitalize()}Resources")
     }
 
     private fun BaseExtension.findNavigationFolder(): File? {

@@ -17,7 +17,6 @@ compileKotlin.kotlinOptions.jvmTarget = "1.8"
 repositories {
     gradlePluginPortal()
     google()
-    jcenter()
     mavenCentral()
 }
 
@@ -28,7 +27,7 @@ dependencies {
 gradlePlugin {
     plugins {
         register("navigation-core") {
-            id = "redmadrobot.navigation-core"
+            id = "navigation-core"
             implementationClass = "com.example.buildsrc.NavigationCoreGeneratorPlugin"
         }
     }
