@@ -62,7 +62,24 @@ internal class Processor : AbstractProcessor() {
         val originatingElement =
             fragmentsProviderModule?.toString()?.let(elementUtils::getTypeElement)
 
-        val generators = createGenerators(annotatedClasses.orEmpty().toList())
+        val needCreateFactory = fragmentsProviderModule?.getAnnotation(FragmentsModule::class.java)?.generateFactory ?: false
+        val markedClasses = annotatedClasses.orEmpty().toList()
+        val generators = buildList {
+            if (needCreateFactory) {
+                add(JavaFragmentFactoryGenerator(FACTORY_NAME))
+            }
+
+            add(JavaFragmentKeyAnnotationClassGenerator())
+
+            add(JavaDaggerModuleGenerator(MODULE_NAME, markedClasses) { packageName ->
+                if (needCreateFactory) {
+                    val factoryProvider = JavaFragmentFactoryGenerator.provideDaggerModuleMethod(packageName, FACTORY_NAME)
+                    addMethod(factoryProvider)
+                } else {
+                    this
+                }
+            })
+        }
 
         generators.forEach { generator ->
             val packageName = originatingElement?.asClassName()?.packageName.orEmpty()
@@ -77,19 +94,6 @@ internal class Processor : AbstractProcessor() {
                 .build()
                 .writeTo(processingEnv.filer)
         }
-    }
-
-    private fun createGenerators(elements: List<Element>): List<ClassGenerator> {
-        return listOf(
-            JavaModuleGenerator(
-                className = MODULE_NAME,
-                factoryName = FACTORY_NAME,
-                elements = elements
-            ),
-            FragmentFactoryGenerator(
-                factoryName = FACTORY_NAME
-            )
-        )
     }
 
     companion object {

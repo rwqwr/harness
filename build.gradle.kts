@@ -1,5 +1,5 @@
 buildscript {
-    val kotlinVersion: String by extra("1.4.31")
+    val kotlinVersion: String by extra("1.5.30")
 
     dependencies {
         classpath("com.android.tools.build:gradle:4.1.2")
@@ -14,10 +14,10 @@ plugins {
 }
 
 redmadrobot {
-    android {
-        minSdk = 29
-        targetSdk = 30
-    }
+//    android {
+//        minSdk = 29
+//        targetSdk = 30
+//    }
 }
 
 tasks.register("clean", Delete::class) {

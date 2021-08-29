@@ -2,4 +2,4 @@ package com.example.fragment_processor_api
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
-annotation class FragmentsModule
+annotation class FragmentsModule(val generateFactory: Boolean = false)

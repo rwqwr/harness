@@ -3,22 +3,20 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
         google()
-        jcenter()
     }
     resolutionStrategy {
         eachPlugin {
             if (requested.id.namespace == "redmadrobot") {
-                useModule("com.redmadrobot.build:infrastructure:0.8.1")
+                useModule("com.redmadrobot.build:infrastructure:0.11")
+                useModule("com.redmadrobot.build:infrastructure-android:0.11")
             }
         }
     }
 }
 dependencyResolutionManagement {
     repositories {
-        gradlePluginPortal()
         mavenCentral()
         google()
-        jcenter()
     }
 }
 include(":app")

@@ -1,6 +1,8 @@
 package com.example.fragment_processor
 
 import com.squareup.javapoet.*
+import dagger.Binds
+import dagger.Provides
 import javax.annotation.processing.Filer
 import javax.inject.Inject
 import javax.inject.Provider
@@ -10,7 +12,7 @@ import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 
-internal class FragmentFactoryGenerator(
+internal class JavaFragmentFactoryGenerator(
     private val factoryName: String
 ) : ClassGenerator {
 
@@ -24,7 +26,7 @@ internal class FragmentFactoryGenerator(
             ClassName.get(Map::class.java),
             ParameterizedTypeName.get(
                 ClassName.get(Class::class.java),
-                WildcardTypeName.subtypeOf(Any::class.java)
+                WildcardTypeName.subtypeOf(fragmentClassName)
             ),
             ParameterizedTypeName.get(
                 ClassName.get(Provider::class.java),
@@ -72,5 +74,17 @@ internal class FragmentFactoryGenerator(
                     .build()
             )
             .superclass(androidFactoryClassName)
+    }
+
+    companion object {
+
+        fun provideDaggerModuleMethod(packageName: String, fragmentFactoryName: String): MethodSpec {
+            return MethodSpec.methodBuilder("provideFactory")
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .addParameter(ClassName.get(packageName, fragmentFactoryName), "factory")
+                .returns(androidFactoryClassName)
+                .addAnnotation(Binds::class.java)
+                .build()
+        }
     }
 }

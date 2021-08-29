@@ -1,19 +1,17 @@
 package com.example.fragment_processor
 
 import com.squareup.javapoet.*
-import dagger.Binds
 import dagger.Module
-import javax.annotation.processing.Filer
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.Element
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 
-internal class JavaModuleGenerator(
+internal class JavaDaggerModuleGenerator(
     private val className: String,
-    private val factoryName: String,
     private val elements: List<Element>,
+    private val additionalClassBuilder: TypeSpec.Builder.(packageName: String) -> TypeSpec.Builder = { this }
 ) : ClassGenerator {
 
     override fun generate(
@@ -22,13 +20,6 @@ internal class JavaModuleGenerator(
         sourceVersion: SourceVersion,
         elementsUtils: Elements
     ): TypeSpec.Builder {
-        val factoryProvider = MethodSpec.methodBuilder("provideFactory")
-            .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-            .addParameter(ClassName.get(packageName, factoryName), "factory")
-            .returns(androidFactoryClassName)
-            .addAnnotation(Binds::class.java)
-            .build()
-
         return TypeSpec.classBuilder(className)
             .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
             .addAnnotation(Module::class.java)
@@ -39,12 +30,13 @@ internal class JavaModuleGenerator(
                 )?.let(it::addAnnotation)
             }
             .addMethod(MethodSpec.constructorBuilder().addModifiers(Modifier.PRIVATE).build())
-            .addMethod(factoryProvider)
             .also { originatingElement?.let(it::addOriginatingElement) }
-            .generateMethods(elements, elementsUtils)
+            .generateMethods(packageName, elements, elementsUtils)
+            .additionalClassBuilder(packageName)
     }
 
     private fun TypeSpec.Builder.generateMethods(
+        packageName: String,
         elements: List<Element>,
         elementsUtils: Elements
     ): TypeSpec.Builder {
@@ -53,8 +45,8 @@ internal class JavaModuleGenerator(
 
             addOriginatingElement(typeElement)
 
-            val method = JavaProvideFragmentMethodGenerator
-                .generate(typeElement)
+            val method = JavaFragmentProviderMethodGenerator
+                .generate(packageName, typeElement)
                 .build()
             addMethod(method)
         }
