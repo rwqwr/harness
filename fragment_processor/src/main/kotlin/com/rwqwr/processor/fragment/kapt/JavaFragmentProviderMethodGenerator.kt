@@ -1,5 +1,6 @@
-package com.rwqwr.processor.fragment
+package com.rwqwr.processor.fragment.kapt
 
+import com.rwqwr.processor.fragment.fragmentClassName
 import com.squareup.javapoet.*
 import dagger.Binds
 import dagger.multibindings.IntoMap

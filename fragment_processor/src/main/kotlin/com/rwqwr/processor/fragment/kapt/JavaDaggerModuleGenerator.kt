@@ -1,4 +1,4 @@
-package com.rwqwr.processor.fragment
+package com.rwqwr.processor.fragment.kapt
 
 import com.squareup.javapoet.*
 import dagger.Module

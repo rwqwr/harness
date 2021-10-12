@@ -1,4 +1,4 @@
-package com.rwqwr.processor.fragment
+package com.rwqwr.processor.fragment.kapt
 
 import com.rwqwr.processor.api.FragmentsModule
 import com.rwqwr.processor.api.ProvideToFactory
