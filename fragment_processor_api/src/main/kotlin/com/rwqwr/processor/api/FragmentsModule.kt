@@ -1,4 +1,4 @@
-package com.example.fragment_processor_api
+package com.rwqwr.processor.api
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)

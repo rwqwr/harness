@@ -1,22 +1,15 @@
-package com.example.fragment_processor
+package com.rwqwr.processor.fragment
 
-import com.example.fragment_processor_api.FragmentsModule
-import com.example.fragment_processor_api.ProvideToFactory
-import com.google.auto.service.AutoService
+import com.rwqwr.processor.api.FragmentsModule
+import com.rwqwr.processor.api.ProvideToFactory
 import com.squareup.javapoet.JavaFile
 import com.squareup.kotlinpoet.asClassName
-import net.ltgt.gradle.incap.IncrementalAnnotationProcessor
-import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType
 import javax.annotation.processing.AbstractProcessor
-import javax.annotation.processing.Processor
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.SourceVersion
-import javax.lang.model.element.Element
 import javax.lang.model.element.TypeElement
 
 @Suppress("DEPRECATION")
-@IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
-@AutoService(Processor::class)
 internal class Processor : AbstractProcessor() {
 
     override fun getSupportedSourceVersion(): SourceVersion = SourceVersion.latestSupported()

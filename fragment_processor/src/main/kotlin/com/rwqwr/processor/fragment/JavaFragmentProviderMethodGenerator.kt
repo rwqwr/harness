@@ -1,9 +1,7 @@
-package com.example.fragment_processor
+package com.rwqwr.processor.fragment
 
 import com.squareup.javapoet.*
 import dagger.Binds
-import dagger.Provides
-import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
@@ -16,7 +14,9 @@ internal object JavaFragmentProviderMethodGenerator {
             .addAnnotation(Binds::class.java)
             .addAnnotation(IntoMap::class.java)
             .addAnnotation(
-                AnnotationSpec.builder(ClassName.get(packageName, JavaFragmentKeyAnnotationClassGenerator.ANNOTATION_MAP_KEY_NAME))
+                AnnotationSpec.builder(ClassName.get(packageName,
+                    JavaFragmentKeyAnnotationClassGenerator.ANNOTATION_MAP_KEY_NAME
+                ))
                     .addMember("value","\$T.class", TypeName.get(element.asType()))
                     .build()
             )

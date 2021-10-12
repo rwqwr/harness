@@ -1,4 +1,4 @@
-package com.example.fragment_processor_api
+package com.rwqwr.processor.api
 
 import kotlin.reflect.KClass
 

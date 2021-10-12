@@ -1,4 +1,4 @@
-package com.example.fragment_processor
+package com.rwqwr.processor.fragment
 
 import com.squareup.javapoet.*
 import dagger.Module
@@ -45,8 +45,7 @@ internal class JavaDaggerModuleGenerator(
 
             addOriginatingElement(typeElement)
 
-            val method = JavaFragmentProviderMethodGenerator
-                .generate(packageName, typeElement)
+            val method = JavaFragmentProviderMethodGenerator.generate(packageName, typeElement)
                 .build()
             addMethod(method)
         }

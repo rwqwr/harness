@@ -1,4 +1,4 @@
-package com.example.fragment_processor
+package com.rwqwr.processor.fragment
 
 import com.squareup.javapoet.ClassName
 

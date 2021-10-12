@@ -1,13 +1,10 @@
-package com.example.fragment_processor
+package com.rwqwr.processor.fragment
 
 import com.squareup.javapoet.*
 import dagger.Binds
-import dagger.Provides
-import javax.annotation.processing.Filer
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.lang.model.SourceVersion
-import javax.lang.model.element.Element
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements

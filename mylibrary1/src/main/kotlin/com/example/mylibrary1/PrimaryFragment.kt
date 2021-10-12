@@ -1,12 +1,10 @@
 package com.example.mylibrary1
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.fragment_processor_api.ProvideToFactory
+import com.rwqwr.processor.api.ProvideToFactory
 import com.example.mylibrary1.databinding.FragmentPrimaryBinding
 import com.redmadrobot.extensions.viewbinding.viewBinding
 import javax.inject.Inject

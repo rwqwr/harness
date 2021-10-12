@@ -1,8 +1,7 @@
-package com.example.fragment_processor
+package com.rwqwr.processor.fragment
 
 import com.squareup.javapoet.AnnotationSpec
 import com.squareup.javapoet.ClassName
-import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeSpec
