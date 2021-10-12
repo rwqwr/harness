@@ -1,4 +1,4 @@
-package com.rwqwr.processor.fragment.kapt
+package com.rwqwr.processor.fragment.kapt.generator
 
 import com.rwqwr.processor.fragment.androidFactoryClassName
 import com.rwqwr.processor.fragment.fragmentClassName

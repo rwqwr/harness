@@ -1,4 +1,4 @@
-package com.rwqwr.processor.fragment.kapt
+package com.rwqwr.processor.fragment.kapt.generator
 
 import com.rwqwr.processor.fragment.fragmentClassName
 import com.squareup.javapoet.AnnotationSpec

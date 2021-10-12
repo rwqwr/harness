@@ -2,6 +2,9 @@ package com.rwqwr.processor.fragment.kapt
 
 import com.rwqwr.processor.api.FragmentsModule
 import com.rwqwr.processor.api.ProvideToFactory
+import com.rwqwr.processor.fragment.kapt.generator.JavaDaggerModuleGenerator
+import com.rwqwr.processor.fragment.kapt.generator.JavaFragmentFactoryGenerator
+import com.rwqwr.processor.fragment.kapt.generator.JavaFragmentKeyAnnotationClassGenerator
 import com.squareup.javapoet.JavaFile
 import com.squareup.kotlinpoet.asClassName
 import javax.annotation.processing.AbstractProcessor
