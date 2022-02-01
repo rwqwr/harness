@@ -1,0 +1,69 @@
+[versions]
+
+kotlin = "1.6.10"
+kotlin-metadata = "0.3.0"
+
+# Android
+material = "1.5.0"
+appcompat = "1.2.0"
+
+# DI
+dagger = "2.40.5"
+
+# Annotations procesing
+ksp = "1.6.10-1.0.2"
+kotlinpoet = "1.10.2"
+
+# r_m_r
+rmr-ktx-viewbinding = "4.1.2-2"
+rmr-plugin = "0.15"
+
+# Tools
+detekt = "1.19.0"
+
+junit = "5.8.1"
+tschuchortdev-kotlin-testing = "1.4.7"
+[libraries]
+
+kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
+kotlin-metadata = { module = "org.jetbrains.kotlinx:kotlinx-metadata-jvm", version.ref = "kotlin-metadata" }
+
+# Android
+material = { module = "com.google.android.material:material", version.ref = "material" }
+android-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+
+# DI
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+
+# Annotations procesing
+ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
+kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet"}
+kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet"}
+kotlinpoet-metadata = { module = "com.squareup:kotlinpoet-metadata", version.ref = "kotlinpoet"}
+
+# r_m_r
+rmr-ktx-viewbinding = { module = "com.redmadrobot.extensions:viewbinding-ktx", version.ref = "rmr-ktx-viewbinding" }
+
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit"}
+junit-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+
+tschuchortdev-kotlin-testing = { module = "com.github.tschuchortdev:kotlin-compile-testing-ksp", version.ref = "tschuchortdev-kotlin-testing" }
+
+[plugins]
+
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+
+# Tools
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+
+# Annotations procesing
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+
+# r_m_r
+rmr-android-library = { id = "com.redmadrobot.android-library", version.ref = "rmr-plugin" }
+rmr-android-application = { id = "com.redmadrobot.application", version.ref = "rmr-plugin" }
+rmr-android-config = { id = "com.redmadrobot.android-config", version.ref = "rmr-plugin" }
+rmr-kotlin-library = { id = "com.redmadrobot.kotlin-library", version.ref = "rmr-plugin" }

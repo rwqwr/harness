@@ -1,3 +1,6 @@
+enableFeaturePreview("VERSION_CATALOGS")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -11,9 +14,9 @@ dependencyResolutionManagement {
         google()
     }
 }
+
 include(":processor_api")
 include(":processor_ksp")
-include(":app")
-include(":mylibrary1")
+include(":sample")
 
 rootProject.name = "FragmentFactory"

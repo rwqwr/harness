@@ -1,7 +1,6 @@
-import com.example.buildsrc.dependencies.*
-
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.redmadrobot.kotlin-library")
+    id(libs.plugins.rmr.kotlin.library.get().pluginId)
 }
 
 java {
@@ -22,19 +21,18 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    implementation(dependency(JetBrains.Kotlin.Std))
-    implementation(dependency(Google.Dagger.Api))
+    implementation(projects.processorApi)
 
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.6.10-1.0.2")
+    implementation(platform(libs.kotlin.bom))
+    implementation(libs.dagger)
+    implementation(libs.ksp)
 
-    implementation("com.squareup:kotlinpoet:1.10.2")
-    implementation("com.squareup:kotlinpoet-ksp:1.10.2")
-    implementation("com.squareup:kotlinpoet-metadata:1.10.1")
-    implementation("com.squareup:javapoet:1.11.1")
-    implementation(project(":processor_api"))
+    implementation(libs.kotlinpoet)
+    implementation(libs.kotlinpoet.ksp)
+    implementation(libs.kotlinpoet.metadata)
 
-    testImplementation("com.github.tschuchortdev:kotlin-compile-testing-ksp:1.4.7")
-    testImplementation(platform("org.junit:junit-bom:5.8.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation(libs.tschuchortdev.kotlin.testing)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.api)
+    testRuntimeOnly(libs.junit.engine)
 }
