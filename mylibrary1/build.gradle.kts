@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":fragment_processor_api"))
+    implementation(project(":processor_api"))
     ksp(project(":processor_ksp"))
 
     implementation(dependency(JetBrains.Kotlin.Std))

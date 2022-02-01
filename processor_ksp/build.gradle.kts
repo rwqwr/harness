@@ -31,7 +31,7 @@ dependencies {
     implementation("com.squareup:kotlinpoet-ksp:1.10.2")
     implementation("com.squareup:kotlinpoet-metadata:1.10.1")
     implementation("com.squareup:javapoet:1.11.1")
-    implementation(project(":fragment_processor_api"))
+    implementation(project(":processor_api"))
 
     testImplementation("com.github.tschuchortdev:kotlin-compile-testing-ksp:1.4.7")
     testImplementation(platform("org.junit:junit-bom:5.8.1"))
