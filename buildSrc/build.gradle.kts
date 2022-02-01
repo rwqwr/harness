@@ -12,7 +12,7 @@ java {
 
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions.useIR = true
-compileKotlin.kotlinOptions.jvmTarget = "1.8"
+compileKotlin.kotlinOptions.jvmTarget = "11"
 
 repositories {
     gradlePluginPortal()
@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:4.1.2")
+    implementation("com.android.tools.build:gradle:7.0.0")
 }
 
 gradlePlugin {

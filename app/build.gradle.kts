@@ -1,8 +1,7 @@
 import com.example.buildsrc.dependencies.*
 
 plugins {
-    id("redmadrobot.application")
-    id("androidx.navigation.safeargs.kotlin")
+    id("com.redmadrobot.application")
 }
 
 android {
@@ -19,7 +18,6 @@ android {
 dependencies {
 
     api(project(":mylibrary1"))
-    api(project(":mylibrary2"))
 
     implementation(dependency(JetBrains.Kotlin.Std))
     implementation(dependency(JetBrains.KotlinX.Coroutines))

@@ -13,8 +13,7 @@ internal interface DiPrimaryComponent {
     interface Initializer {
         companion object {
             fun init(): DiPrimaryComponent {
-                return DaggerDiPrimaryComponent.builder()
-                    .build()
+                return DaggerDiPrimaryComponent.builder().build()
             }
         }
     }

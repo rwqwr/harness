@@ -5,4 +5,4 @@ import dagger.Module
 
 @FragmentsModule(generateFactory = true)
 @Module(includes = [FragmentProviderModule::class])
-internal class FragmentModule
+internal interface FragmentModule

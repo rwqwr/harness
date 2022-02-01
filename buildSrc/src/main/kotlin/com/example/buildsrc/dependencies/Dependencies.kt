@@ -1,7 +1,7 @@
 package com.example.buildsrc.dependencies
 
 object JetBrains : Dependency by Group("org.jetbrains") {
-    object Kotlin : Dependency by Subgroup(JetBrains, "kotlin", "1.5.30") {
+    object Kotlin : Dependency by Subgroup(JetBrains, "kotlin", "1.6.10") {
         object Std : Dependency by Module(Kotlin, "kotlin-stdlib", { version })
     }
     object KotlinX : Dependency by Subgroup(JetBrains, "kotlinx") {
