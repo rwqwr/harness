@@ -66,4 +66,6 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 rmr-android-library = { id = "com.redmadrobot.android-library", version.ref = "rmr-plugin" }
 rmr-android-application = { id = "com.redmadrobot.application", version.ref = "rmr-plugin" }
 rmr-android-config = { id = "com.redmadrobot.android-config", version.ref = "rmr-plugin" }
+rmr-publish-library = { id = "com.redmadrobot.publish", version.ref = "rmr-plugin" }
+rmr-publish-config = { id = "com.redmadrobot.publish-config", version.ref = "rmr-plugin" }
 rmr-kotlin-library = { id = "com.redmadrobot.kotlin-library", version.ref = "rmr-plugin" }

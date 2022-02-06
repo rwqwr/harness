@@ -7,8 +7,10 @@ buildscript {
     }
 }
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.redmadrobot.android-config") version "0.15"
+    alias(libs.plugins.rmr.android.config)
+    alias(libs.plugins.rmr.publish.config)
 }
 
 redmadrobot {

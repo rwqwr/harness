@@ -30,6 +30,10 @@ internal class FragmentSymbolicProcessor(
             .toList()
             .filterIsInstance<KSClassDeclaration>()
 
+        if (fragmentsAnnotatedClasses.isEmpty()) {
+            return emptyList()
+        }
+
         val fragmentModuleClasses = resolver.getSymbolsWithAnnotation(
             annotationName = FragmentsModule::class.qualifiedName.orEmpty()
         )
