@@ -24,11 +24,13 @@ internal class FragmentSymbolicProcessor(
 ) : SymbolProcessor {
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        val fragmentsAnnotatedClasses = resolver.getSymbolsWithAnnotation(
+        val annotatedFiles = resolver.getSymbolsWithAnnotation(
             annotationName = ProvideToFactory::class.qualifiedName.orEmpty()
         )
-            .toList()
+
+        val fragmentsAnnotatedClasses = annotatedFiles
             .filterIsInstance<KSClassDeclaration>()
+            .toList()
 
         if (fragmentsAnnotatedClasses.isEmpty()) {
             return emptyList()
@@ -78,10 +80,11 @@ internal class FragmentSymbolicProcessor(
             })
         }
 
+        val originatingKSFiles = (fragments + fragmentsModules).mapNotNull { it.containingFile }
         generators.forEach { generator ->
             val typeSpecBuilder = generator.generate(packageName)
             val fileSpec = FileSpec.get(packageName, typeSpecBuilder.build())
-            fileSpec.writeTo(codeGenerator, aggregating = true)
+            fileSpec.writeTo(codeGenerator, aggregating = false, originatingKSFiles = originatingKSFiles)
         }
     }
 
