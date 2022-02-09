@@ -1,8 +1,6 @@
 # Fragment factory
 [![build](https://github.com/rwqwr/fragment-factory/actions/workflows/workflows.yml/badge.svg)](https://github.com/rwqwr/fragment-factory/actions/workflows/workflows.yml)
 
-The repository contains the ability to generate Dagger Fragments module and generate navigation stubs for a multi-module project.
-
 ## Annotations
 The annotation `@ProvideToFactory` allows you to register a fragment with a fragment module.
 

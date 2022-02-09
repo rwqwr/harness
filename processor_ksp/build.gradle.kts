@@ -1,3 +1,5 @@
+import com.redmadrobot.build.dsl.ossrh
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id(libs.plugins.rmr.kotlin.library.get().pluginId)
@@ -22,6 +24,12 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
     options { testLogging.events("skipped", "failed", "passed") }
+}
+
+publishing {
+    repositories {
+        ossrh()
+    }
 }
 
 dependencies {
