@@ -1,12 +1,14 @@
+@file:Suppress("UnstableApiUsage")
+
 import com.redmadrobot.build.dsl.developer
 import com.redmadrobot.build.dsl.mit
 import com.redmadrobot.build.dsl.setGitHubProject
 
 buildscript {
-    val kotlinVersion: String by extra("1.6.10")
+    val kotlinVersion: String by extra("1.7.0")
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.0")
+        classpath("com.android.tools.build:gradle:7.1.2")
         classpath(kotlin("gradle-plugin", version = kotlinVersion))
     }
 }
@@ -20,6 +22,8 @@ plugins {
 redmadrobot {
     android {
         minSdk.set(29)
+        targetSdk.set(31)
+        compileSdk.set("31")
     }
     publishing {
         signArtifacts.set(true) // Enables artifacts signing, required for publication to OSSRH
