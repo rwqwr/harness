@@ -2,7 +2,7 @@ package com.example.fragmentfactory.host
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentFactory
+import com.example.fragmentfactory.FragmentFactory
 import com.example.fragmentfactory.di.DiPrimaryComponent
 import javax.inject.Inject
 
