@@ -4,17 +4,10 @@ import com.redmadrobot.build.dsl.developer
 import com.redmadrobot.build.dsl.mit
 import com.redmadrobot.build.dsl.setGitHubProject
 
-buildscript {
-    val kotlinVersion: String by extra("1.7.0")
-
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.1.2")
-        classpath(kotlin("gradle-plugin", version = kotlinVersion))
-    }
-}
-
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.rmr.android.config)
     alias(libs.plugins.rmr.publish.config)
 }

@@ -1,6 +1,6 @@
 [versions]
-
-kotlin = "1.7.0"
+android-gradle-plugin = "7.2.1"
+kotlin = "1.7.20"
 kotlin-metadata = "0.3.0"
 
 # Android
@@ -8,21 +8,22 @@ material = "1.5.0"
 appcompat = "1.2.0"
 
 # DI
-dagger = "2.42"
+dagger = "2.44"
 
 # Annotations procesing
-ksp = "1.7.0-1.0.6"
+ksp = "1.7.20-1.0.6"
 kotlinpoet = "1.10.2"
 
 # r_m_r
 rmr-ktx-viewbinding = "4.1.2-2"
-rmr-plugin = "0.16.2"
+rmr-plugin = "0.17"
 
 # Tools
 detekt = "1.19.0"
 
 junit = "5.8.1"
 tschuchortdev-kotlin-testing = "1.4.7"
+
 [libraries]
 
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
@@ -53,6 +54,9 @@ tschuchortdev-kotlin-testing = { module = "com.github.tschuchortdev:kotlin-compi
 
 [plugins]
 
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
