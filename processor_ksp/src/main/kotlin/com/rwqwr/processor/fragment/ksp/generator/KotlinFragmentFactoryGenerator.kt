@@ -17,12 +17,11 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 internal class KotlinFragmentFactoryGenerator(
+    override val packageName: String,
     private val factoryName: String
 ) : KotlinClassGenerator {
 
-    override fun generate(
-        packageName: String,
-    ): TypeSpec.Builder {
+    override fun generate(): TypeSpec.Builder {
         return TypeSpec.classBuilder(factoryName)
             .primaryConstructor(
                 FunSpec.constructorBuilder()

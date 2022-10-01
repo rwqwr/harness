@@ -1,7 +1,5 @@
 package com.rwqwr.processor.fragment.ksp
 
-import com.google.devtools.ksp.KspExperimental
-import com.google.devtools.ksp.getAnnotationsByType
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.processing.Resolver
@@ -10,12 +8,7 @@ import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.rwqwr.processor.api.FragmentsModule
 import com.rwqwr.processor.api.ProvideToFactory
-import com.rwqwr.processor.fragment.ksp.generator.KotlinDaggerModuleGenerator
-import com.rwqwr.processor.fragment.ksp.generator.KotlinFragmentFactoryGenerator
-import com.rwqwr.processor.fragment.ksp.generator.KotlinFragmentKeyAnnotationClassGenerator
 import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.ksp.KotlinPoetKspPreview
-import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.writeTo
 
 internal class FragmentSymbolicProcessor(
@@ -41,56 +34,34 @@ internal class FragmentSymbolicProcessor(
         )
             .toList()
             .filterIsInstance<KSClassDeclaration>()
+            .map(::Module)
 
         try {
-            processClasses(fragmentsAnnotatedClasses, fragmentModuleClasses)
+            innerProcess(
+                fragmentsAnnotatedClasses = fragmentsAnnotatedClasses,
+                fragmentModules = fragmentModuleClasses
+            )
         } catch (e: Throwable) {
             logger.exception(e)
         }
-
         return emptyList()
     }
 
-    @OptIn(KspExperimental::class, KotlinPoetKspPreview::class)
-    private fun processClasses(fragments: List<KSClassDeclaration>, fragmentsModules: List<KSClassDeclaration>) {
-        val fragmentsProviderModule = fragmentsModules.firstOrNull()
-            ?: return
-
-        val needCreateFactory = fragmentsProviderModule
-            .getAnnotationsByType(FragmentsModule::class)
-            .first()
-            .generateFactory
-
-        val packageName = fragmentsProviderModule.packageName.asString()
-
-        val generators = buildList {
-            if (needCreateFactory) {
-                add(KotlinFragmentFactoryGenerator(FACTORY_NAME))
-            }
-
-            add(KotlinFragmentKeyAnnotationClassGenerator())
-            add(KotlinDaggerModuleGenerator(MODULE_NAME, fragments.map { it.toClassName() }) {
-                if (needCreateFactory) {
-                    val factoryProvider =
-                        KotlinFragmentFactoryGenerator.provideDaggerModuleMethod(packageName, FACTORY_NAME)
-                    addFunction(factoryProvider)
-                } else {
-                    this
-                }
-            })
+    private fun innerProcess(
+        fragmentsAnnotatedClasses: List<KSClassDeclaration>,
+        fragmentModules: List<Module>
+    ) {
+        val generators = fragmentModules.map { module ->
+           module.process(fragmentsAnnotatedClasses)
         }
 
-        val originatingKSFiles = (fragments + fragmentsModules).mapNotNull { it.containingFile }
+        val fragmentsModuleClasses = fragmentModules.map { it.declaration }
+        val originatingKSFiles = (fragmentsModuleClasses + fragmentsAnnotatedClasses).mapNotNull { it.containingFile }
+
         generators.forEach { generator ->
-            val typeSpecBuilder = generator.generate(packageName)
-            val fileSpec = FileSpec.get(packageName, typeSpecBuilder.build())
+            val typeSpecBuilder = generator.generate()
+            val fileSpec = FileSpec.get(generator.packageName, typeSpecBuilder.build())
             fileSpec.writeTo(codeGenerator, aggregating = false, originatingKSFiles = originatingKSFiles)
         }
-    }
-
-    companion object {
-
-        private const val MODULE_NAME = "FragmentProviderModule"
-        private const val FACTORY_NAME = "FragmentFactory_Impl"
     }
 }

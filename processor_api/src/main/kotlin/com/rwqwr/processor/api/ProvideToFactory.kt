@@ -4,4 +4,7 @@ import kotlin.reflect.KClass
 
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.CLASS)
-public annotation class ProvideToFactory(val factoryClass: KClass<*> = Any::class)
+public annotation class ProvideToFactory(
+    val factoryClass: KClass<*>,
+    val mapKey: KClass<*>
+)

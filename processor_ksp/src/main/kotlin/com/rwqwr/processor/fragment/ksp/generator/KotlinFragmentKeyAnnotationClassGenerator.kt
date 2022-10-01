@@ -15,11 +15,11 @@ import kotlin.reflect.KClass
 
 internal const val ANNOTATION_MAP_KEY_NAME = "FragmentMapKey"
 
-internal class KotlinFragmentKeyAnnotationClassGenerator : KotlinClassGenerator {
+internal class KotlinFragmentKeyAnnotationClassGenerator(
+    override val packageName: String
+) : KotlinClassGenerator {
 
-    override fun generate(
-        packageName: String,
-    ): TypeSpec.Builder {
+    override fun generate(): TypeSpec.Builder {
         return TypeSpec.annotationBuilder(ClassName(packageName, ANNOTATION_MAP_KEY_NAME))
             .addModifiers(KModifier.PUBLIC)
             .addAnnotation(

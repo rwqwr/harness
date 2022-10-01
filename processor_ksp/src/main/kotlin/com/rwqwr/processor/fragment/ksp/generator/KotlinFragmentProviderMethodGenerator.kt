@@ -9,14 +9,12 @@ import dagger.multibindings.IntoMap
 
 internal object KotlinFragmentProviderMethodGenerator {
 
-    fun generate(packageName: String, element: ClassName): FunSpec.Builder {
+    fun generate(mapKey: ClassName, element: ClassName): FunSpec.Builder {
         return FunSpec.builder("provide${element.simpleName}")
             .addAnnotation(Provides::class)
             .addAnnotation(IntoMap::class)
             .addAnnotation(
-                AnnotationSpec.builder(ClassName(packageName,
-                    ANNOTATION_MAP_KEY_NAME
-                ))
+                AnnotationSpec.builder(mapKey)
                     .addMember("%T::class", element)
                     .build()
             )
