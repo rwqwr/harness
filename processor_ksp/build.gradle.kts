@@ -1,3 +1,4 @@
+import com.redmadrobot.build.dsl.kotlinCompile
 import com.redmadrobot.build.dsl.ossrh
 
 @Suppress("DSL_SCOPE_VIOLATION")
@@ -14,10 +15,13 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+kotlinCompile {
     kotlinOptions {
         jvmTarget = "11"
-        freeCompilerArgs = freeCompilerArgs + listOf("-opt-in=kotlin.ExperimentalStdlibApi")
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-opt-in=kotlin.ExperimentalStdlibApi",
+            "-opt-in=com.squareup.kotlinpoet.ksp.KotlinPoetKspPreview",
+        )
     }
 }
 
