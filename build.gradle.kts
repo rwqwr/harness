@@ -23,9 +23,9 @@ redmadrobot {
         useGpgAgent.set(true)
 
         pom {
-            setGitHubProject("rwqwr/fragment-factory")
+            setGitHubProject("rwqwr/harness")
 
-            description.set("Fragment factory")
+            description.set("Dagger Multibinding Utils")
 
             licenses {
                 mit()
