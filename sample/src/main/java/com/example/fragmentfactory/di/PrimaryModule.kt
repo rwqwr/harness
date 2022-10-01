@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Named
 
-@Module(includes = [FragmentModule::class])
+@Module(includes = [FragmentModule::class, SecondFragmentModule::class])
 internal object PrimaryModule {
 
     @Provides

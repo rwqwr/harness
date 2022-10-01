@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.fragmentfactory.databinding.FragmentPrimaryBinding
+import com.example.fragmentfactory.di.FragmentFactoryKey
 import com.example.fragmentfactory.di.FragmentMapKey
 import com.example.fragmentfactory.di.FragmentModule
-import com.example.fragmentfactory.di.SecondFragmentModule
 import com.redmadrobot.extensions.viewbinding.viewBinding
 import com.rwqwr.processor.api.ProvideToFactory
 import javax.inject.Inject
@@ -25,7 +25,7 @@ class PrimaryFragment @Inject constructor(
     }
 }
 
-@ProvideToFactory(SecondFragmentModule::class, FragmentMapKey::class)
+@FragmentFactoryKey
 class SecondaryFragment @Inject constructor(
     @Named("primary") private val text:String
 ) : Fragment(R.layout.fragment_primary) {

@@ -5,8 +5,11 @@ import javax.inject.Inject
 import javax.inject.Provider
 import androidx.fragment.app.FragmentFactory as OriginFragmentFactory
 
+@Suppress("unused")
+@JvmSuppressWildcards
 class FragmentFactory @Inject constructor(
-    private val fragments: @JvmSuppressWildcards Map<Class<out Fragment>, Provider<Fragment>>
+    private val fragments: Map<Class<out Fragment>, Provider<Fragment>>,
+    private val fragmentsSet: Set<Fragment>
 ) : OriginFragmentFactory() {
 
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
