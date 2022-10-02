@@ -1,8 +1,6 @@
 package com.rwqwr.processor.fragment.ksp.generator
 
-import com.rwqwr.processor.api.ProvideToFactory
-import com.rwqwr.processor.api.setKeyQualifiedName
-import com.rwqwr.processor.fragment.ksp.fragmentClassName
+import com.rwqwr.processor.api.SetKey
 import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FunSpec
@@ -12,11 +10,11 @@ import dagger.multibindings.IntoSet
 
 internal object KotlinFragmentProviderMethodGenerator {
 
-    fun generate(mapKey: ClassName, element: ClassName): FunSpec.Builder {
+    fun generate(mapKey: ClassName, element: ClassName, supertype: ClassName): FunSpec.Builder {
         return FunSpec.builder("provide${element.simpleName}")
             .addAnnotation(Provides::class)
             .let { builder ->
-                if (mapKey.canonicalName == ProvideToFactory.Companion.setKeyQualifiedName) {
+                if (mapKey.canonicalName == SetKey::class.qualifiedName) {
                     builder.addAnnotation(IntoSet::class)
                 } else {
                     builder.addAnnotation(IntoMap::class)
@@ -29,10 +27,10 @@ internal object KotlinFragmentProviderMethodGenerator {
             }
             .addAnnotation(JvmStatic::class)
             .addParameter(
-                "fragment",
+                "instance",
                 element
             )
-            .returns(fragmentClassName)
-            .addStatement("return fragment")
+            .returns(supertype)
+            .addStatement("return instance")
     }
 }

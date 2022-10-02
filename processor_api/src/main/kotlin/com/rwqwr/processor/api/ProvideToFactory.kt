@@ -6,12 +6,9 @@ import kotlin.reflect.KClass
 @Target(AnnotationTarget.CLASS)
 public annotation class ProvideToFactory(
     val factoryClass: KClass<*>,
-    val mapKey: KClass<*> = SetKey::class
+    val supertype: KClass<*>,
+    val mapKey: KClass<*>,
 ) {
 
     public companion object
 }
-
-internal annotation class SetKey
-
-public val ProvideToFactory.Companion.setKeyQualifiedName: String? get() = SetKey::class.qualifiedName

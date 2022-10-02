@@ -8,7 +8,7 @@ import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSType
 import com.rwqwr.processor.api.FactoryKey
-import com.rwqwr.processor.api.FragmentsModule
+import com.rwqwr.processor.api.FactoryModule
 import com.rwqwr.processor.api.ProvideToFactory
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ksp.toClassName
@@ -35,6 +35,7 @@ internal class FragmentSymbolicProcessor(
         val classAnnotatedCustomKey = customAnnotatedClasses.flatMap { customAnnotatedClass ->
             val arguments = customAnnotatedClass.findArgumentsOfAnnotation<ProvideToFactory>()
             val factoryProvider = arguments?.findValue<KSType>(ProvideToFactory::factoryClass)
+            val supertype = arguments?.findValue<KSType>(ProvideToFactory::supertype)
             val mapKey = arguments?.findValue<KSType>(ProvideToFactory::mapKey)
 
             resolver.getSymbolsWithAnnotation(customAnnotatedClass.toClassName().canonicalName)
@@ -43,6 +44,7 @@ internal class FragmentSymbolicProcessor(
                     MarkedClass(
                         original = annotatedClass,
                         factoryProvider = requireNotNull(factoryProvider?.toClassName()),
+                        supertype = requireNotNull(supertype?.toClassName()),
                         mapKey = requireNotNull(mapKey?.toClassName())
                     )
                 }
@@ -52,11 +54,13 @@ internal class FragmentSymbolicProcessor(
             .map { annotatedClass ->
                 val arguments = annotatedClass.findArgumentsOfAnnotation<ProvideToFactory>()
                 val factoryProvider = arguments?.findValue<KSType>(ProvideToFactory::factoryClass)
+                val supertype = arguments?.findValue<KSType>(ProvideToFactory::supertype)
                 val mapKey = arguments?.findValue<KSType>(ProvideToFactory::mapKey)
 
                 MarkedClass(
                     original = annotatedClass,
                     factoryProvider = requireNotNull(factoryProvider?.toClassName()),
+                    supertype = requireNotNull(supertype?.toClassName()),
                     mapKey = requireNotNull(mapKey?.toClassName())
                 )
             }
@@ -68,7 +72,7 @@ internal class FragmentSymbolicProcessor(
         }
 
         val fragmentModuleClasses = resolver.getSymbolsWithAnnotation(
-            annotationName = FragmentsModule::class.qualifiedName.orEmpty()
+            annotationName = FactoryModule::class.qualifiedName.orEmpty()
         )
             .toList()
             .filterIsInstance<KSClassDeclaration>()

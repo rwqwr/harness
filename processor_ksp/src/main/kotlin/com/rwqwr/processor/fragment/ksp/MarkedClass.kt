@@ -6,5 +6,6 @@ import com.squareup.kotlinpoet.ClassName
 internal data class MarkedClass(
     val original: KSClassDeclaration,
     val factoryProvider: ClassName,
+    val supertype: ClassName,
     val mapKey: ClassName
 )

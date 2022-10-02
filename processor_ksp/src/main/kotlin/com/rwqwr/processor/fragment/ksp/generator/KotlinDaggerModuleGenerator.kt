@@ -27,7 +27,8 @@ internal class KotlinDaggerModuleGenerator(
         elements.forEach { element ->
             val method = KotlinFragmentProviderMethodGenerator.generate(
                 element.mapKey,
-                element.original.toClassName()
+                element.original.toClassName(),
+                element.supertype
             )
             addFunction(method.build())
         }
