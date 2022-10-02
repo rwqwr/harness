@@ -12,7 +12,11 @@ import com.rwqwr.processor.api.ProvideToFactory
 import javax.inject.Inject
 import javax.inject.Named
 
-@ProvideToFactory(FragmentModule::class, FragmentMapKey::class)
+@ProvideToFactory(
+    factoryClass = FragmentModule::class,
+    supertype = Fragment::class,
+    mapKey = FragmentMapKey::class,
+)
 class PrimaryFragment @Inject constructor(
     @Named("primary") private val text:String
 ) : Fragment(R.layout.fragment_primary) {
