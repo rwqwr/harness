@@ -37,7 +37,7 @@ publishing {
 }
 
 dependencies {
-    implementation(projects.processorApi)
+    implementation(projects.harnessApi)
 
     implementation(platform(libs.kotlin.bom))
     implementation(libs.dagger)

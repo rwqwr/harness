@@ -19,8 +19,8 @@ dependencyResolutionManagement {
     }
 }
 
-include(":processor_api")
-include(":processor_ksp")
+include(":harness_api")
+include(":harness_compiler")
 include(":sample")
 
-rootProject.name = "FragmentFactory"
+rootProject.name = "harness"

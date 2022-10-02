@@ -33,8 +33,8 @@ dependencies {
     implementation(libs.android.appcompat)
     implementation(libs.material)
 
-    implementation(projects.processorApi)
-    ksp(projects.processorKsp)
+    implementation(projects.harnessApi)
+    ksp(projects.harnessCompiler)
 
     implementation(libs.rmr.ktx.viewbinding)
 
